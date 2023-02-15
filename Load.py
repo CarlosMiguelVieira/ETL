@@ -27,7 +27,7 @@ class Load(Operator):
                            if_exists='append', schema='portalativa')
 
     def read(self):
-        query = open(fr'C:\Users\cpinto\Desktop\Teste OO\{self.nome_da_tarefa}.txt', 'r').read()
+        query = open(fr'.\Teste OO\{self.nome_da_tarefa}.txt', 'r').read()
         data = pd.read_sql(query, self.connection_oracle())
         return data[0:2]
 
@@ -48,14 +48,14 @@ class Load(Operator):
 
     def get_engine(self):
         str_conn = f"""Driver={{SQL Server Native Client 11.0}};
-        Server={{192.168.16.91}};Database={{StageAtiva}};uid={self.login_senha()[0]};
+        Server={}};Database={{}};uid={self.login_senha()[0]};
         pwd={self.login_senha()[1]}"""
         db_params = urllib.parse.quote_plus(str_conn)
         return sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect={}".format(db_params))
 
     def login_senha(self):
-        mysql_user = 'bi_user'
-        mysql_pw = 'Bu$!n&$$*1107'
-        oracle_user = 'bi_user'
-        oracle_pw = 'Ativa@00'
+        mysql_user = ''
+        mysql_pw = ''
+        oracle_user = ''
+        oracle_pw = ''
         return [mysql_user, mysql_pw, oracle_user, oracle_pw]
