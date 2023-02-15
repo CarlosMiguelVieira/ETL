@@ -2,7 +2,7 @@
 """
 Created on Tue Jan 24 09:53:38 2023
 
-@author: moliva
+@author: cpinto
 """
 
 class Operator:
