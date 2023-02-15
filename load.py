@@ -19,7 +19,7 @@ class Load(Operator):
         connection.execute(f"DELETE {self.nome_da_tarefa.replace('-', '.')}")
 
     def execute(self):
-        with open(f"""../etl_ipeline/log/{self.nome_da_tarefa} {datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.txt""", "w") as log:
+        with open(f"""./etl_ipeline/log/{self.nome_da_tarefa} {datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.txt""", "w") as log:
             try:
                 super().execute()
                 with self.get_engine().begin() as connection:
@@ -34,7 +34,7 @@ class Load(Operator):
                            if_exists='append', schema= self.nome_da_tarefa.split('-')[0])
 
     def read(self):
-        query = open(fr'C:\Users\cpinto\Desktop\Teste OO\{self.nome_da_tarefa}.txt', 'r').read()
+        query = open(fr'.\Teste OO\{self.nome_da_tarefa}.txt', 'r').read()
         data = pd.read_sql(query, self.connection_oracle())
         # data = pd.read_sql(query, self.get_engine())
         return data
@@ -57,7 +57,7 @@ class Load(Operator):
 
     def get_engine(self):
         str_conn = f"""Driver={{SQL Server Native Client 11.0}};
-        Server={{192.168.16.91}};Database={{stage}};uid={self.login_senha()[0]};
+        Server={{}};Database={{}};uid={self.login_senha()[0]};
         pwd={self.login_senha()[1]}"""
         db_params = urllib.parse.quote_plus(str_conn)
         return sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect={}".format(db_params))
